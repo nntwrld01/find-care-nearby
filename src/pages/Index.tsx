@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, MapPin, Phone, Clock, Star, Navigation, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,7 +31,7 @@ const Index = () => {
       phone: "(555) 123-4567",
       services: ["Emergency Care", "Cardiology", "Orthopedics", "Pediatrics"],
       hours: "24/7 Emergency",
-      coordinates: [-74.006, 40.7128],
+      coordinates: [-74.006, 40.7128] as [number, number],
       waitTime: "15 mins",
       specialties: ["Trauma Center", "Stroke Center"]
     },
@@ -46,7 +45,7 @@ const Index = () => {
       phone: "(555) 987-6543",
       services: ["Internal Medicine", "Surgery", "Radiology", "Lab Services"],
       hours: "6 AM - 10 PM",
-      coordinates: [-74.008, 40.7158],
+      coordinates: [-74.008, 40.7158] as [number, number],
       waitTime: "25 mins",
       specialties: ["Cancer Care", "Women's Health"]
     },
@@ -60,7 +59,7 @@ const Index = () => {
       phone: "(555) 456-7890",
       services: ["Emergency Care", "Urgent Care", "X-Ray", "Minor Surgery"],
       hours: "24/7 Emergency",
-      coordinates: [-74.010, 40.7180],
+      coordinates: [-74.010, 40.7180] as [number, number],
       waitTime: "8 mins",
       specialties: ["Fast Track Emergency", "Pediatric Emergency"]
     }

@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Search, MapPin, Navigation } from "lucide-react";
+import { Search, MapPin, Navigation, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
@@ -69,11 +68,21 @@ const Index = () => {
       <header className="bg-white shadow-sm border-b border-blue-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <MapPin className="h-5 w-5 text-white" />
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </Button>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <MapPin className="h-5 w-5 text-white" />
+                </div>
+                <h1 className="text-xl font-bold text-gray-900">Find Hospitals</h1>
               </div>
-              <h1 className="text-xl font-bold text-gray-900">HealthcareBoard</h1>
             </div>
             <Button onClick={() => navigate('/map')} className="flex items-center gap-2">
               <Navigation className="h-4 w-4" />
@@ -83,17 +92,9 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Find Healthcare Near You
-          </h2>
-          <p className="text-xl mb-8 text-blue-100">
-            Locate nearby hospitals and get directions instantly.
-          </p>
-          
-          {/* Search Bar */}
+      {/* Search Section */}
+      <section className="bg-white py-8 border-b">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -102,7 +103,7 @@ const Index = () => {
                 placeholder="Search hospitals or services..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-4 text-lg bg-white text-gray-900 border-0 rounded-xl shadow-lg"
+                className="pl-12 pr-4 py-3 text-lg border-gray-300 rounded-xl shadow-sm"
               />
             </div>
           </div>
@@ -113,11 +114,11 @@ const Index = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-gray-900">
-            {filteredHospitals.length} hospitals found
+            {filteredHospitals.length} hospitals found near you
           </h3>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {filteredHospitals.map((hospital) => (
             <HospitalCard
               key={hospital.id}

@@ -24,9 +24,9 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist",
     assetsDir: "assets",
     sourcemap: mode !== "production",
-    target: "es2015",
+    target: "es2020", // ✅ FIX: Update from "es2015" to "es2020" to support BigInt
     cssCodeSplit: true,
-    chunkSizeWarningLimit: 1000, // optional, raises warning limit
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -43,7 +43,6 @@ export default defineConfig(({ mode }) => ({
             return "vendor";
           }
 
-          // Example: split out UI components folder
           if (id.includes("/components/ui/")) {
             return "ui-components";
           }

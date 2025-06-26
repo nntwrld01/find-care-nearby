@@ -13,10 +13,10 @@ interface Hospital {
   rating: number;
   reviews: number;
   phone: string;
-  services: string[];
+  services: (string | { name: string })[];
   hours: string;
   waitTime: string;
-  specialties: string[];
+  specialties: (string | { name: string })[];
 }
 
 interface HospitalCardProps {
@@ -78,26 +78,26 @@ const HospitalCard = ({ hospital, onClick }: HospitalCardProps) => {
         <div className="mb-4">
           <h4 className="text-sm font-medium text-gray-900 mb-2">Services</h4>
           <div className="flex flex-wrap gap-2">
-            {hospital.services.slice(0, 4).map((service, index) => (
+            {(hospital.services ?? []).slice(0, 4).map((service, index) => (
               <Badge key={index} variant="outline" className="text-xs">
-                {service}
+                {typeof service === 'string' ? service : service.name}
               </Badge>
             ))}
-            {hospital.services.length > 4 && (
+            {(hospital.services ?? []).length > 4 && (
               <Badge variant="outline" className="text-xs">
-                +{hospital.services.length - 4} more
+                +{(hospital.services ?? []).length - 4} more
               </Badge>
             )}
           </div>
         </div>
 
-        {hospital.specialties.length > 0 && (
+        {(hospital.specialties ?? []).length > 0 && (
           <div className="mb-4">
             <h4 className="text-sm font-medium text-gray-900 mb-2">Specialties</h4>
             <div className="flex flex-wrap gap-2">
-              {hospital.specialties.map((specialty, index) => (
+              {(hospital.specialties ?? []).map((specialty, index) => (
                 <Badge key={index} className="bg-blue-100 text-blue-800 text-xs">
-                  {specialty}
+                  {typeof specialty === 'string' ? specialty : specialty.name}
                 </Badge>
               ))}
             </div>

@@ -1,63 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, MapPin, Navigation, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import HospitalCard from "@/components/HospitalCard";
+import { fetchHospitals } from "@/lib/api";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [hospitals, setHospitals] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Simplified hospital data
-  const hospitals = [
-    {
-      id: 1,
-      name: "City General Hospital",
-      address: "123 Healthcare Ave, Medical District",
-      distance: "0.8 miles",
-      rating: 4.7,
-      reviews: 342,
-      phone: "(555) 123-4567",
-      services: ["Emergency Care", "Cardiology", "Orthopedics", "Pediatrics"],
-      hours: "24/7 Emergency",
-      coordinates: [-74.006, 40.7128] as [number, number],
-      waitTime: "15 mins",
-      specialties: ["Trauma Center", "Stroke Center"]
-    },
-    {
-      id: 2,
-      name: "St. Mary's Medical Center",
-      address: "456 Wellness Blvd, Downtown",
-      distance: "1.2 miles",
-      rating: 4.5,
-      reviews: 198,
-      phone: "(555) 987-6543",
-      services: ["Internal Medicine", "Surgery", "Radiology", "Lab Services"],
-      hours: "6 AM - 10 PM",
-      coordinates: [-74.008, 40.7158] as [number, number],
-      waitTime: "25 mins",
-      specialties: ["Cancer Care", "Women's Health"]
-    },
-    {
-      id: 3,
-      name: "Regional Emergency Hospital",
-      address: "789 Quick Care St, Uptown",
-      distance: "2.1 miles",
-      rating: 4.3,
-      reviews: 89,
-      phone: "(555) 456-7890",
-      services: ["Emergency Care", "Urgent Care", "X-Ray", "Minor Surgery"],
-      hours: "24/7 Emergency",
-      coordinates: [-74.010, 40.7180] as [number, number],
-      waitTime: "8 mins",
-      specialties: ["Fast Track Emergency", "Pediatric Emergency"]
-    }
-  ];
+  useEffect(() => {
+    setLoading(true);
+    fetchHospitals()
+      .then((data) => {
+        setHospitals(data);
+        setError(null);
+      })
+      .catch((err) => {
+        setError("Failed to load hospitals");
+        setHospitals([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
-  const filteredHospitals = hospitals.filter(hospital =>
+  const filteredHospitals = hospitals.filter((hospital) =>
     hospital.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    hospital.services.some(service => 
+    (hospital.services || []).some((service: string) => 
       service.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
@@ -119,13 +91,21 @@ const Index = () => {
         </div>
 
         <div className="space-y-6">
-          {filteredHospitals.map((hospital) => (
-            <HospitalCard
-              key={hospital.id}
-              hospital={hospital}
-              onClick={() => {}}
-            />
-          ))}
+          {loading ? (
+            <div className="text-center text-gray-500">Loading hospitals...</div>
+          ) : error ? (
+            <div className="text-center text-red-500">{error}</div>
+          ) : filteredHospitals.length === 0 ? (
+            <div className="text-center text-gray-400">No hospitals found.</div>
+          ) : (
+            filteredHospitals.map((hospital) => (
+              <HospitalCard
+                key={hospital.id}
+                hospital={hospital}
+                onClick={() => {}}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

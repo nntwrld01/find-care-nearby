@@ -1,24 +1,88 @@
-# Welcome to your Lovable project
+# Healthcare Nearby
 
-## Project info
+A modern web application for discovering and managing healthcare facilities, featuring a React/Vite frontend and a Django/PostgreSQL backend.
 
-**URL**: https://lovable.dev/projects/257c274b-afb2-477a-85b9-ea6f77249775
+---
 
-## How can I edit this code?
+## Prerequisites
 
-There are several ways of editing your application.
+- **Node.js** (v18+ recommended)
+- **npm** (comes with Node.js)
+- **Python** (3.10+ recommended)
+- **pip** (Python package manager)
+- **PostgreSQL** (14+ recommended)
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/257c274b-afb2-477a-85b9-ea6f77249775) and start prompting.
+## Backend Setup (Django)
 
-Changes made via Lovable will be committed automatically to this repo.
+1. **Navigate to the backend directory:**
+   ```sh
+   cd backend
+   ```
+2. **Create a virtual environment:**
+   ```sh
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   ```
+4. **Configure environment variables:**
+   - Copy `.env.example` to `.env` (if present), or set the following in your environment:
+     - `DATABASE_URL` (or configure `settings.py` for your Postgres DB)
+     - `MAPBOX_ACCESS_TOKEN` (your Mapbox public token)
+5. **Apply migrations:**
+   ```sh
+   python manage.py migrate
+   ```
+6. **Create a superuser (optional, for admin access):**
+   ```sh
+   python manage.py createsuperuser
+   ```
+7. **Run the backend server:**
+   ```sh
+   python manage.py runserver
+   ```
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Frontend Setup (React/Vite)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Navigate to the project root:**
+   ```sh
+   cd .. # if in backend/
+   ```
+2. **Install frontend dependencies:**
+   ```sh
+   npm install
+   ```
+3. **Start the frontend dev server:**
+   ```sh
+   npm run dev
+   ```
+   - The app will be available at [http://localhost:5173](http://localhost:5173)
+
+---
+
+## Notes
+- The frontend proxies API requests to the Django backend (see `vite.config.js` for proxy settings).
+- Ensure PostgreSQL is running and accessible.
+- For production, configure secure environment variables and use a production-ready server setup.
+
+---
+
+## Project Structure
+- `src/` — React frontend code
+- `backend/` — Django backend code
+- `public/` — Static assets
+
+---
+
+## Troubleshooting
+- If you encounter issues, check that all prerequisites are installed and environment variables are set correctly.
+- For further help, consult the official docs for [Django](https://docs.djangoproject.com/), [React](https://react.dev/), and [Vite](https://vitejs.dev/).
 
 Follow these steps:
 
@@ -60,14 +124,3 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/257c274b-afb2-477a-85b9-ea6f77249775) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)

@@ -59,6 +59,14 @@ const Landing = () => {
               <Navigation className="h-5 w-5 mr-2" />
               View Map
             </Button>
+            <Button
+              size="lg"
+              variant="default"
+              className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 text-lg border border-white"
+              onClick={() => navigate('/hospital-register')}
+            >
+              Hospital Sign Up
+            </Button>
           </div>
         </div>
       </section>
